@@ -259,60 +259,67 @@ xlabel("x方向 (m)"); ylabel("y方向 ((m)"); zlabel("z方向 (m)");
 grid on; hold on;
 plot3(x, y, z, '.', 'MarkerSize', 8); title("飞行轨迹观测数据");
 % plot3(x_filted, y_filted, z_filted, 'LineWidth', 2);
-legend("真实轨迹", "观测数据");
-
+legend("Real Trajectory", "Observed Data");
+%%
 figure('name',"滤波结果3维图",'Position', [100, 100, 1200, 800]);
 plot3(x, y, z, '.', 'MarkerSize', 8);
-title("Singer模型的卡尔曼滤波结果");
-xlabel("x方向 (m)"); ylabel("y方向 ((m)"); zlabel("z方向 (m)");
+title("the Result of IMM");
+xlabel("x (m)"); ylabel("y ((m)"); zlabel("z (m)");
 grid on; hold on;
 plot3(x_filted, y_filted, z_filted, 'LineWidth', 2);
-legend("观测数据", "滤波结果");
-
+plot3(X_t, Y_t, Z_t, 'green', 'LineWidth', 2);
+legend("Observed Data", "Result", "Real Trajectory");
+exportgraphics(gcf, "IMM滤波结果.pdf", "ContentType", "vector")
+%% 
 figure('name',"IMM模型的速度卡尔曼滤波结果",'Position', [1300, 100, 1200, 800]);
 subplot(3,1,1);
 plot(XV_t); xlabel("k"); ylabel("m/s"); title("xv分量");
 hold on; grid on;
 plot(xv_filted);
-legend("真实速度","滤波结果");
+legend("True Speed","Result");
 
 subplot(3,1,2);
 plot(YV_t); xlabel("k"); ylabel("m/s"); title("yv分量");
 hold on; grid on;
 plot(yv_filted);
-legend("真实速度","滤波结果");
+legend("True Speed","Result");
 
 subplot(3,1,3);
 plot(ZV_t); xlabel("k"); ylabel("m/s"); title("zv分量");
 hold on; grid on;
 plot(zv_filted);
-legend("真实速度","滤波结果");
-
+legend("True Speed","Result");
+exportgraphics(gcf, "IMM速度的滤波结果.pdf", "ContentType", "vector")
+%%
 figure('name',"IMM模型的位置卡尔曼滤波结果",'Position', [1300, 100, 1200, 800]);
 subplot(3,1,1);
-plot(X_t); xlabel("k"); ylabel("m"); title("x分量");
+plot(X_t); xlabel("k"); ylabel("m"); title("x");
 hold on; grid on;
 plot(x,'.');
 plot(x_filted);
-legend("真实轨迹","观测数据","滤波结果");
+legend("Real Trajectory","Observed Data","Result");
 
 subplot(3,1,2);
-plot(Y_t); xlabel("k"); ylabel("m"); title("y分量");
+plot(Y_t); xlabel("k"); ylabel("m"); title("y");
 hold on; grid on;
 plot(y,'.');
 plot(y_filted);
-legend("真实轨迹","观测数据","滤波结果");
+legend("Real Trajectory","Observed Data","Result");
 
 subplot(3,1,3);
-plot(Z_t); xlabel("k"); ylabel("m"); title("z分量");
+plot(Z_t); xlabel("k"); ylabel("m"); title("z");
 hold on; grid on;
 plot(z,'.');
 plot(z_filted);
-legend("真实轨迹","观测数据","滤波结果");
-disp("可视化结果完成.");
-
+legend("Real Trajectory","Observed Data","Result");
+exportgraphics(gcf, "IMM位置的滤波结果.pdf", "ContentType", "vector")
+%%
 figure('name',"概率转化图", 'Position', [1300, 100, 1200, 800]);
 plot(mu_record(1,:), 'LineWidth', 2); hold on; grid on;
 plot(mu_record(2,:), 'LineWidth', 2);
 plot(mu_record(3,:), 'LineWidth', 2);
-legend("CV模型", "CA模型", "Singer模型");
+xlabel("time"); ylabel("probability");
+legend("CV", "CA", "Singer");
+exportgraphics(gcf, "IMM滤波概率转化图.pdf", "ContentType", "vector")
+
+disp("可视化结果完成.");
